@@ -16,10 +16,14 @@ interface EventCardProps {
   category: string;
   isToday?: boolean;
   verified?: boolean;
+  locationMapsLink?: string | null;
+  // allow extra props (like React key) to avoid type errors when JSX types are not fully available
+  [key: string]: any;
 }
 
-export function EventCard({ name, location, distance, time, category, isToday, verified }: EventCardProps) {
-  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+export function EventCard({ name, location, distance, time, category, isToday, verified, locationMapsLink }: EventCardProps) {
+  // Prefer a maps link if supplied by the backend, otherwise build a Google maps search URL
+  const googleMapsUrl = locationMapsLink ? locationMapsLink : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
   
   return (
     <Card className="p-5 rounded-2xl bg-gray-800 border-gray-700 hover:border-gray-600 hover:shadow-xl transition-all">

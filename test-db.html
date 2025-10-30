@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Connection</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Testing Supabase Connection</h1>
+    <div id="output"></div>
+
+    <script>
+        const output = document.getElementById('output');
+
+        // Replace these with your actual values from .env file
+        const supabaseUrl = 'https://your-project.supabase.co'; // Replace with your actual Supabase URL
+        const supabaseAnonKey = 'your-anon-key-here'; // Replace with your actual anon key
+
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        async function testConnection() {
+            try {
+                output.innerHTML = 'Testing connection...<br>';
+
+                // First, try to select from events table
+                const { data, error } = await supabase.from('events').select('*');
+
+                if (error) {
+                    output.innerHTML += `Error: ${error.message}<br>`;
+                    return;
+                }
+
+                output.innerHTML += `Connection successful! Found ${data.length} events.<br>`;
+                output.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre><br>`;
+
+                // If no events, try to insert sample data
+                if (data.length === 0) {
+                    output.innerHTML += 'Inserting sample events...<br>';
+
+                    const sampleEvents = [
+                        {
+                            name: 'Wedding Reception',
+                            location: 'Bethany Convention Centre, Aluva',
+                            lat: 10.1106,
+                            lng: 76.3525,
+                            time: 'Today, 5:00 PM',
+                            category: 'Wedding Ceremony',
+                            verified: true
+                        },
+                        {
+                            name: 'Temple Sadya',
+                            location: 'Aluva Shiva Temple, Manappuram',
+                            lat: 10.1088,
+                            lng: 76.3509,
+                            time: 'Today, 6:30 PM',
+                            category: 'Temple Feast',
+                            verified: true
+                        }
+                    ];
+
+                    const { data: inserted, error: insertError } = await supabase
+                        .from('events')
+                        .insert(sampleEvents)
+                        .select();
+
+                    if (insertError) {
+                        output.innerHTML += `Insert error: ${insertError.message}<br>`;
+                    } else {
+                        output.innerHTML += `Inserted ${inserted.length} events successfully!<br>`;
+                        output.innerHTML += `<pre>${JSON.stringify(inserted, null, 2)}</pre>`;
+                    }
+                }
+
+            } catch (error) {
+                output.innerHTML += `Exception: ${error.message}<br>`;
+            }
+        }
+
+        testConnection();
+    </script>
+</body>
+</html>
