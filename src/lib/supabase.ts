@@ -1,15 +1,3 @@
-// Provide a minimal ImportMeta typing for this file so TypeScript in the workspace
-// doesn't complain about `import.meta.env`. In a full project you may want to
-// centralize these types (e.g. `env.d.ts`) and provide a stricter shape.
-declare global {
-  interface ImportMetaEnv {
-    [key: string]: any
-  }
-  interface ImportMeta {
-    readonly env: ImportMetaEnv
-  }
-}
-
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL

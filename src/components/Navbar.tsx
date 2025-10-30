@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 
 export function Navbar() {
   const phoneNumber = '917304483935' // country code +91 and number without + or spaces
-  const message = `Add Event Format:_\nPlease fill in the details.\n1. Event Name:\n2. Date and Time:\n3. Location:\n4. Map Link:`
+  const message = `*Please fill in the details to add a food events.*\n1. *Event Name*:\n2. *Date and Time*:\n3. *Location*:\n4. *Map Link*:`
   const waLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 
   return (
