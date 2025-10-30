@@ -109,9 +109,12 @@ export function EventListings({ userLocation }: EventListingsProps) {
     return ''
   }
 
-  // Parse a date object from event fields (best-effort). Returns null if unable.
+  // Parse a date object from event fields (best-effort). Returns null if unable or if event is in the past.
   const parseEventDate = (e: any): Date | null => {
     const now = new Date()
+    // Set now to start of current day for date comparisons
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    
     const dateRaw = getField(e, ['date', 'event_date', 'eventDate'])
     const timeRaw = getField(e, ['time', 'event_time'])
 
@@ -120,38 +123,52 @@ export function EventListings({ userLocation }: EventListingsProps) {
     // Try to parse the date
     const date = new Date()
     
-    // Handle dates like "Oct 25" or "25 Oct"
+    // Handle dates with explicit years like "25 Oct 2025" or without years like "25 Oct"
     if (dateRaw) {
-      // Try both "DD Month" and "Month DD" formats
-      const monthMatch = String(dateRaw).match(/(?:(\d{1,2})\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*)|(?:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s*(\d{1,2}))/i)
+      const s = String(dateRaw).trim()
+      
+      // First try to detect if there's a year in the date
+      const hasYear = /\b(\d{4})\b/.test(s)
+      
+      // Try parsing both "DD Month [YYYY]" and "Month DD [YYYY]" formats
+      const monthMatch = s.match(/(?:(\d{1,2})\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*(?:\s*(\d{4}))?)|(?:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s*(\d{1,2})(?:\s*(\d{4}))?)/i)
+      
       if (monthMatch) {
-        let day, monthStr;
+        let day, monthStr, yearStr;
         if (monthMatch[1] && monthMatch[2]) {
-          // "DD Month" format
+          // "DD Month [YYYY]" format
           day = parseInt(monthMatch[1])
           monthStr = monthMatch[2]
+          yearStr = monthMatch[3]
         } else {
-          // "Month DD" format
-          day = parseInt(monthMatch[4])
-          monthStr = monthMatch[3]
+          // "Month DD [YYYY]" format
+          day = parseInt(monthMatch[5])
+          monthStr = monthMatch[4]
+          yearStr = monthMatch[6]
         }
         
         const month = new Date(Date.parse(`${monthStr} 1, 2000`)).getMonth()
         date.setMonth(month)
         date.setDate(day)
-        date.setFullYear(now.getFullYear())
         
-        // If date is in past for this year, try next year
-        if (date.getTime() < now.getTime()) {
-          date.setFullYear(now.getFullYear() + 1)
+        // If year was explicitly provided, use it
+        if (yearStr) {
+          date.setFullYear(parseInt(yearStr))
+        } else {
+          // No explicit year: use current year
+          date.setFullYear(now.getFullYear())
+          // If date would be in the past, use next year
+          if (date < todayStart) {
+            date.setFullYear(now.getFullYear() + 1)
+          }
         }
       } else {
-        // Try other date formats
-        const parsed = Date.parse(String(dateRaw))
+        // Try other date formats as fallback
+        const parsed = Date.parse(s)
         if (!isNaN(parsed)) {
           date.setTime(parsed)
-          // If the date is past, assume next year
-          if (date.getTime() < now.getTime()) {
+          // For dates without explicit year that would be in the past
+          if (!hasYear && date < todayStart) {
             date.setFullYear(now.getFullYear() + 1)
           }
         } else {
@@ -214,21 +231,28 @@ export function EventListings({ userLocation }: EventListingsProps) {
     const now = new Date()
     const isToday = isSameDay(dt, now)
 
-    // For all events, show date and time
-    const options: Intl.DateTimeFormatOptions = {
+    if (isToday) {
+      // For today's events, add "Today" prefix and time only
+      return `Today at ${dt.toLocaleTimeString(undefined, { 
+        hour: 'numeric', 
+        minute: '2-digit', 
+        hour12: true 
+      })}`
+    }
+
+    // For future events, show date (without year) and time
+    const dateOptions: Intl.DateTimeFormatOptions = {
       day: 'numeric',
-      month: 'short',
+      month: 'short'
+    }
+    const timeOptions: Intl.DateTimeFormatOptions = {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true
     }
     
-    if (isToday) {
-      // For today's events, add "Today" prefix
-      return `Today at ${dt.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true })}`
-    }
-    
-    return dt.toLocaleString(undefined, options)
+    // Format as "30 Oct at 11:00 PM"
+    return `${dt.toLocaleDateString(undefined, dateOptions)} at ${dt.toLocaleTimeString(undefined, timeOptions)}`
   }
 
   // Separate and sort events by distance from user location
