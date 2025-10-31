@@ -99,6 +99,8 @@ export function EventListings({ userLocation }: EventListingsProps) {
     return Number.isFinite(n) ? n : null
   }
 
+  
+
   // Format date and time together. db may store `time` or split `date` and `time` columns.
   const formatDateTime = (e: any) => {
     const timeVal = getField(e, ['time', 'event_time'])
@@ -111,95 +113,97 @@ export function EventListings({ userLocation }: EventListingsProps) {
 
   // Parse a date object from event fields (best-effort). Returns null if unable or if event is in the past.
   const parseEventDate = (e: any): Date | null => {
-    const now = new Date()
-    // Set now to start of current day for date comparisons
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  const now = new Date()
+  // Set now to start of current day for date comparisons
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 
-    const dateRaw = getField(e, ['date', 'event_date', 'eventDate'])
-    const timeRaw = getField(e, ['time', 'event_time'])
+  let dateRaw = getField(e, ['date', 'event_date', 'eventDate'])
+  let timeRaw = getField(e, ['time', 'event_time'])
 
-    if (!dateRaw && !timeRaw) return null
+  // Handle combined date and time in time field (e.g., "Oct 22, 6:00 PM" or "Today, 5:00 PM")
+  if (!dateRaw && timeRaw && timeRaw.includes(',')) {
+  const parts = timeRaw.split(', ')
+  if (parts.length >= 2) {
+  dateRaw = parts[0]
+  timeRaw = parts.slice(1).join(', ')
+  }
+  }
 
-    // Handle "Today" in time field (e.g., "Today, 5:00 PM")
-    if (timeRaw && timeRaw.toLowerCase().startsWith('today')) {
-      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-      const timePart = timeRaw.substring(6).trim() // Remove "Today," and trim
-      const t = parseTimeString(timePart)
-      if (t) {
-        date.setHours(t.hours, t.minutes, 0, 0)
-      }
-      return date.getTime() >= now.getTime() ? date : null
-    }
+  if (!dateRaw && !timeRaw) return null
 
-    // Try to parse the date
-    const date = new Date()
-    
+  let date: Date
+
+    // Handle "Today"
+  if (dateRaw && dateRaw.toLowerCase() === 'today') {
+    date = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  } else {
     // Handle dates with explicit years like "25 Oct 2025" or without years like "25 Oct"
+    console.log('Parsing dateRaw:', dateRaw)
     if (dateRaw) {
       const s = String(dateRaw).trim()
-      
+
       // First try to detect if there's a year in the date
       const hasYear = /\b(\d{4})\b/.test(s)
-      
+
       // Try parsing both "DD Month [YYYY]" and "Month DD [YYYY]" formats
       const monthMatch = s.match(/(?:(\d{1,2})\s*(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*(?:\s*(\d{4}))?)|(?:(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s*(\d{1,2})(?:\s*(\d{4}))?)/i)
-      
+
       if (monthMatch) {
         let day, monthStr, yearStr;
-        if (monthMatch[1] && monthMatch[2]) {
+          if (monthMatch[1] && monthMatch[2]) {
           // "DD Month [YYYY]" format
-          day = parseInt(monthMatch[1])
-          monthStr = monthMatch[2]
-          yearStr = monthMatch[3]
-        } else {
-          // "Month DD [YYYY]" format
-          day = parseInt(monthMatch[5])
-          monthStr = monthMatch[4]
-          yearStr = monthMatch[6]
-        }
-        
-        const month = new Date(Date.parse(`${monthStr} 1, 2000`)).getMonth()
-        date.setMonth(month)
-        date.setDate(day)
-        
-        // If year was explicitly provided, use it
-        if (yearStr) {
-          date.setFullYear(parseInt(yearStr))
-        } else {
-          // No explicit year: use current year
-          date.setFullYear(now.getFullYear())
-          // If date would be in the past, use next year
-          if (date < todayStart) {
-            date.setFullYear(now.getFullYear() + 1)
-          }
-        }
-      } else {
-        // Try other date formats as fallback
-        const parsed = Date.parse(s)
-        if (!isNaN(parsed)) {
-          date.setTime(parsed)
-          // For dates without explicit year that would be in the past
-          if (!hasYear && date < todayStart) {
-            date.setFullYear(now.getFullYear() + 1)
-          }
-        } else {
-          return null
-        }
-      }
+      day = parseInt(monthMatch[1])
+      monthStr = monthMatch[2]
+    yearStr = monthMatch[3]
+  } else {
+    // "Month DD [YYYY]" format
+    day = parseInt(monthMatch[5])
+      monthStr = monthMatch[4]
+    yearStr = monthMatch[6]
+  }
+
+  const monthIndex = new Date(Date.parse(`${monthStr} 1, 2000`)).getMonth()
+    let year = now.getFullYear()
+          if (yearStr) {
+      year = parseInt(yearStr)
     }
 
-    // Parse and set the time if available
-    if (timeRaw) {
-      const t = parseTimeString(String(timeRaw))
-      if (t) {
-        date.setHours(t.hours, t.minutes, 0, 0)
+    date = new Date(year, monthIndex, day)
+
+          // If no explicit year and date is in the past, use next year
+  if (!yearStr && date < todayStart) {
+            date.setFullYear(now.getFullYear() + 1)
+  }
+  } else {
+  // Try other date formats as fallback
+  const parsed = Date.parse(s)
+    if (!isNaN(parsed)) {
+    date = new Date(parsed)
+      // For dates without explicit year that would be in the past
+        if (!hasYear && date < todayStart) {
+        date.setFullYear(now.getFullYear() + 1)
       }
     } else {
-      // If no time specified, assume start of day
-      date.setHours(0, 0, 0, 0)
-    }
+    return null
+  }
+  }
+  } else {
+  return null
+  }
+  }
 
-    // If the resulting date is in the past, return null
+  // Parse and set the time if available
+    if (timeRaw) {
+    const t = parseTimeString(String(timeRaw))
+    if (t) {
+    date.setHours(t.hours, t.minutes, 0, 0)
+  }
+  } else {
+  // If no time specified, assume start of day
+    date.setHours(0, 0, 0, 0)
+  }
+
+  // If the resulting date is in the past, return null
     return date.getTime() >= now.getTime() ? date : null
   }
 
