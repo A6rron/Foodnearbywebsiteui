@@ -22,7 +22,7 @@ export function Navbar() {
 
           <Button
             asChild
-            className="bg-gray-800 text-white hover:bg-gray-700 rounded-full border border-gray-600"
+            className="bg-white text-gray-900 hover:bg-gray-100 rounded-full"
           >
             <a href={waLink} target="_blank" rel="noopener noreferrer">
               Add Event
