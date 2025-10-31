@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 
 export function Navbar() {
   const phoneNumber = '917304483935' // country code +91 and number without + or spaces
-  const message = `*Please fill in the details to add a food events.*\n1. *Event Name*:\n2. *Date and Time*:\n3. *Location*:\n4. *Map Link*:`
+  const message = `Add Event Format:\nPlease fill in the details to add food events.\n1. Event Name:\n2. Date and Time:\n3. Location:\n4. Map Link:\n5. Category (e.g., Wedding Ceremony, Temple Feast):`
   const waLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
 
   return (
@@ -22,7 +22,7 @@ export function Navbar() {
 
           <Button
             asChild
-            className="bg-white text-gray-900 hover:bg-gray-100 rounded-full"
+            className="bg-gray-800 text-white hover:bg-gray-700 rounded-full border border-gray-600"
           >
             <a href={waLink} target="_blank" rel="noopener noreferrer">
               Add Event

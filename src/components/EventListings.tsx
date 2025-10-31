@@ -114,11 +114,22 @@ export function EventListings({ userLocation }: EventListingsProps) {
     const now = new Date()
     // Set now to start of current day for date comparisons
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    
+
     const dateRaw = getField(e, ['date', 'event_date', 'eventDate'])
     const timeRaw = getField(e, ['time', 'event_time'])
 
     if (!dateRaw && !timeRaw) return null
+
+    // Handle "Today" in time field (e.g., "Today, 5:00 PM")
+    if (timeRaw && timeRaw.toLowerCase().startsWith('today')) {
+      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      const timePart = timeRaw.substring(6).trim() // Remove "Today," and trim
+      const t = parseTimeString(timePart)
+      if (t) {
+        date.setHours(t.hours, t.minutes, 0, 0)
+      }
+      return date.getTime() >= now.getTime() ? date : null
+    }
 
     // Try to parse the date
     const date = new Date()
@@ -231,14 +242,7 @@ export function EventListings({ userLocation }: EventListingsProps) {
     const now = new Date()
     const isToday = isSameDay(dt, now)
 
-    if (isToday) {
-      // For today's events, add "Today" prefix and time only
-      return `Today at ${dt.toLocaleTimeString(undefined, { 
-        hour: 'numeric', 
-        minute: '2-digit', 
-        hour12: true 
-      })}`
-    }
+    // Always show date and time for consistency
 
     // For future events, show date (without year) and time
     const dateOptions: Intl.DateTimeFormatOptions = {
