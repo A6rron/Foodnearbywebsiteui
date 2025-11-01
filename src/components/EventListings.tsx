@@ -138,7 +138,6 @@ export function EventListings({ userLocation }: EventListingsProps) {
     date = new Date(now.getFullYear(), now.getMonth(), now.getDate())
   } else {
     // Handle dates with explicit years like "25 Oct 2025" or without years like "25 Oct"
-    console.log('Parsing dateRaw:', dateRaw)
     if (dateRaw) {
       const s = String(dateRaw).trim()
 
@@ -204,7 +203,7 @@ export function EventListings({ userLocation }: EventListingsProps) {
   }
 
   // If the resulting date is in the past, return null
-    return date.getTime() >= now.getTime() ? date : null
+    return date.getTime() >= now.getTime() ? date : null;
   }
 
   // Parse time like '11:00 AM' or '11.00' into hours/minutes
