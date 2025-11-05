@@ -42,9 +42,9 @@ export function Navbar() {
                     onClick={(e) => e.stopPropagation()}
                   >
                     {/* Header */}
-                    <div className="flex items-center justify-between p-6 border-b border-gray-700/50 bg-gradient-to-r from-blue-600/10 to-purple-600/10">
+                    <div className="flex items-center justify-between p-6 border-b border-gray-700/50 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10">
                       <div className="flex items-center gap-4">
-                        <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-xl shadow-lg">
+                        <div className="bg-gradient-to-br from-blue-500 via-purple-600 to-pink-600 p-3 rounded-xl shadow-lg">
                           <HelpCircle className="h-6 w-6 text-white" />
                         </div>
                         <div>
@@ -54,9 +54,9 @@ export function Navbar() {
                       </div>
                       <button
                         onClick={() => setShowTooltip(false)}
-                        className="text-gray-400 hover:text-white transition-all duration-200 p-2 hover:bg-gray-800 rounded-xl hover:rotate-90"
+                        className="text-gray-400 hover:text-white transition-all duration-200 p-2 hover:bg-gray-800 rounded-xl hover:rotate-90 group"
                       >
-                        <X className="h-5 w-5" />
+                        <X className="h-5 w-5 group-hover:scale-110 transition-transform" />
                       </button>
                     </div>
 
@@ -64,13 +64,13 @@ export function Navbar() {
                     <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] custom-scrollbar">
                       {/* Hero Section */}
                       <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-4 shadow-lg">
                           <Zap className="h-4 w-4" />
                           Real-time AI-Powered System
                         </div>
-                        <p className="text-gray-300 text-lg leading-relaxed">
+                        <p className="text-gray-300 text-lg leading-relaxed max-w-2xl">
                           Connect your WhatsApp to instantly discover free food events in your area.
-                          Our AI processes everything automatically.
+                          Our AI processes everything automatically with cutting-edge technology.
                         </p>
                       </div>
 
@@ -82,36 +82,36 @@ export function Navbar() {
                         </h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                          <div className="group bg-gradient-to-br from-green-600/20 to-green-500/10 border border-green-500/30 rounded-xl p-4 hover:scale-105 transition-all duration-300">
-                            <div className="bg-green-500 rounded-full p-3 w-fit mb-3 group-hover:shadow-lg group-hover:shadow-green-500/25 transition-shadow">
+                          <div className="group bg-gradient-to-br from-green-600/20 to-green-500/10 border border-green-500/30 rounded-xl p-4 hover:scale-105 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 text-center">
+                            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-full p-3 w-fit mx-auto mb-3 group-hover:shadow-lg group-hover:shadow-green-500/25 transition-shadow">
                               <MessageCircle className="h-5 w-5 text-white" />
                             </div>
                             <h4 className="font-semibold text-green-300 mb-2">1. Send Message</h4>
-                            <p className="text-sm text-gray-300">Share event details via WhatsApp</p>
+                            <p className="text-sm text-gray-300 leading-relaxed">Share event details via WhatsApp</p>
                           </div>
 
-                          <div className="group bg-gradient-to-br from-blue-600/20 to-blue-500/10 border border-blue-500/30 rounded-xl p-4 hover:scale-105 transition-all duration-300">
-                            <div className="bg-blue-500 rounded-full p-3 w-fit mb-3 group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-shadow">
+                          <div className="group bg-gradient-to-br from-blue-600/20 to-blue-500/10 border border-blue-500/30 rounded-xl p-4 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 text-center">
+                            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-full p-3 w-fit mx-auto mb-3 group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-shadow">
                               <Bot className="h-5 w-5 text-white" />
                             </div>
                             <h4 className="font-semibold text-blue-300 mb-2">2. AI Processing</h4>
-                            <p className="text-sm text-gray-300">Bot extracts event information</p>
+                            <p className="text-sm text-gray-300 leading-relaxed">Bot extracts event information</p>
                           </div>
 
-                          <div className="group bg-gradient-to-br from-purple-600/20 to-purple-500/10 border border-purple-500/30 rounded-xl p-4 hover:scale-105 transition-all duration-300">
-                            <div className="bg-purple-500 rounded-full p-3 w-fit mb-3 group-hover:shadow-lg group-hover:shadow-purple-500/25 transition-shadow">
+                          <div className="group bg-gradient-to-br from-purple-600/20 to-purple-500/10 border border-purple-500/30 rounded-xl p-4 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300 text-center">
+                            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-full p-3 w-fit mx-auto mb-3 group-hover:shadow-lg group-hover:shadow-purple-500/25 transition-shadow">
                               <Database className="h-5 w-5 text-white" />
                             </div>
                             <h4 className="font-semibold text-purple-300 mb-2">3. Database</h4>
-                            <p className="text-sm text-gray-300">Events stored securely</p>
+                            <p className="text-sm text-gray-300 leading-relaxed">Events stored securely</p>
                           </div>
 
-                          <div className="group bg-gradient-to-br from-orange-600/20 to-orange-500/10 border border-orange-500/30 rounded-xl p-4 hover:scale-105 transition-all duration-300">
-                            <div className="bg-orange-500 rounded-full p-3 w-fit mb-3 group-hover:shadow-lg group-hover:shadow-orange-500/25 transition-shadow">
+                          <div className="group bg-gradient-to-br from-orange-600/20 to-orange-500/10 border border-orange-500/30 rounded-xl p-4 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300 text-center">
+                            <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-full p-3 w-fit mx-auto mb-3 group-hover:shadow-lg group-hover:shadow-orange-500/25 transition-shadow">
                               <Globe className="h-5 w-5 text-white" />
                             </div>
                             <h4 className="font-semibold text-orange-300 mb-2">4. Live Updates</h4>
-                            <p className="text-sm text-gray-300">Website updates instantly</p>
+                            <p className="text-sm text-gray-300 leading-relaxed">Website updates instantly</p>
                           </div>
                         </div>
                       </div>
@@ -124,50 +124,62 @@ export function Navbar() {
                         </h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-xl p-4 hover:border-blue-400/40 transition-colors">
+                          <div className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-xl p-4 hover:border-blue-400/40 transition-colors group">
                             <div className="flex items-start gap-4">
-                              <div className="bg-blue-500/20 p-2 rounded-lg">
+                              <div className="bg-blue-500/20 p-2 rounded-lg group-hover:bg-blue-500/30 transition-colors">
                                 <FileImage className="h-5 w-5 text-blue-400" />
                               </div>
-                              <div>
-                                <h4 className="font-semibold text-blue-300 mb-1">📄 Poster (OCR)</h4>
-                                <p className="text-sm text-gray-300">Advanced optical character recognition scans wedding invitations, party flyers, and event posters</p>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-blue-300 mb-1 flex items-center gap-2">
+                                  <FileImage className="h-4 w-4" />
+                                  Poster (OCR)
+                                </h4>
+                                <p className="text-sm text-gray-300 leading-relaxed">Advanced optical character recognition scans wedding invitations, party flyers, and event posters with high accuracy</p>
                               </div>
                             </div>
                           </div>
 
-                          <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl p-4 hover:border-green-400/40 transition-colors">
+                          <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl p-4 hover:border-green-400/40 transition-colors group">
                             <div className="flex items-start gap-4">
-                              <div className="bg-green-500/20 p-2 rounded-lg">
+                              <div className="bg-green-500/20 p-2 rounded-lg group-hover:bg-green-500/30 transition-colors">
                                 <MessageSquare className="h-5 w-5 text-green-400" />
                               </div>
-                              <div>
-                                <h4 className="font-semibold text-green-300 mb-1">💬 Text Messages</h4>
-                                <p className="text-sm text-gray-300">Natural language processing understands casual messages like "Marriage at MES Hall tomorrow 5 PM"</p>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-green-300 mb-1 flex items-center gap-2">
+                                  <MessageSquare className="h-4 w-4" />
+                                  Text Messages
+                                </h4>
+                                <p className="text-sm text-gray-300 leading-relaxed">Natural language processing understands casual messages like "Marriage at MES Hall tomorrow 5 PM"</p>
                               </div>
                             </div>
                           </div>
 
-                          <div className="bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-500/20 rounded-xl p-4 hover:border-purple-400/40 transition-colors">
+                          <div className="bg-gradient-to-r from-purple-500/10 to-violet-500/10 border border-purple-500/20 rounded-xl p-4 hover:border-purple-400/40 transition-colors group">
                             <div className="flex items-start gap-4">
-                              <div className="bg-purple-500/20 p-2 rounded-lg">
+                              <div className="bg-purple-500/20 p-2 rounded-lg group-hover:bg-purple-500/30 transition-colors">
                                 <Calendar className="h-5 w-5 text-purple-400" />
                               </div>
-                              <div>
-                                <h4 className="font-semibold text-purple-300 mb-1">🍽️ Catering Events</h4>
-                                <p className="text-sm text-gray-300">Extracts venue, date, and timing from WhatsApp group catering announcements and schedules</p>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-purple-300 mb-1 flex items-center gap-2">
+                                  <Calendar className="h-4 w-4" />
+                                  Catering Events
+                                </h4>
+                                <p className="text-sm text-gray-300 leading-relaxed">Extracts venue, date, and timing from WhatsApp group catering announcements and schedules</p>
                               </div>
                             </div>
                           </div>
 
-                          <div className="bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/20 rounded-xl p-4 hover:border-red-400/40 transition-colors">
+                          <div className="bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/20 rounded-xl p-4 hover:border-red-400/40 transition-colors group">
                             <div className="flex items-start gap-4">
-                              <div className="bg-red-500/20 p-2 rounded-lg">
+                              <div className="bg-red-500/20 p-2 rounded-lg group-hover:bg-red-500/30 transition-colors">
                                 <MapPin className="h-5 w-5 text-red-400" />
                               </div>
-                              <div>
-                                <h4 className="font-semibold text-red-300 mb-1">📍 Live Media</h4>
-                                <p className="text-sm text-gray-300">GPS metadata verification for photos and videos to ensure accurate location data</p>
+                              <div className="flex-1">
+                                <h4 className="font-semibold text-red-300 mb-1 flex items-center gap-2">
+                                  <MapPin className="h-4 w-4" />
+                                  Live Media
+                                </h4>
+                                <p className="text-sm text-gray-300 leading-relaxed">GPS metadata verification for photos and videos to ensure accurate location data</p>
                               </div>
                             </div>
                           </div>
@@ -176,31 +188,39 @@ export function Navbar() {
 
                       {/* Tips Section */}
                       <div className="bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/20 rounded-xl p-6">
-                        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-3">
+                        <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3">
                           <Shield className="h-5 w-5 text-amber-400" />
                           Important Tips
                         </h3>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="space-y-3">
-                            <div className="flex items-start gap-3">
-                              <MapIcon className="h-4 w-4 text-blue-400 mt-1 flex-shrink-0" />
-                              <p className="text-sm text-gray-300">Click event locations to open in Google Maps for easy navigation</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-4">
+                            <div className="flex items-start gap-4 p-3 bg-gray-800/30 rounded-lg border border-gray-700/30">
+                              <div className="bg-blue-500/20 p-2 rounded-lg flex-shrink-0">
+                                <MapIcon className="h-4 w-4 text-blue-400" />
+                              </div>
+                              <p className="text-sm text-gray-300 leading-relaxed">Click event locations to open in Google Maps for easy navigation</p>
                             </div>
-                            <div className="flex items-start gap-3">
-                              <AlertTriangle className="h-4 w-4 text-yellow-400 mt-1 flex-shrink-0" />
-                              <p className="text-sm text-gray-300">Location permission helps show events near you (defaults to Aluva, Kerala)</p>
+                            <div className="flex items-start gap-4 p-3 bg-gray-800/30 rounded-lg border border-gray-700/30">
+                              <div className="bg-yellow-500/20 p-2 rounded-lg flex-shrink-0">
+                                <AlertTriangle className="h-4 w-4 text-yellow-400" />
+                              </div>
+                              <p className="text-sm text-gray-300 leading-relaxed">Location permission helps show events near you (defaults to Aluva, Kerala)</p>
                             </div>
                           </div>
 
-                          <div className="space-y-3">
-                            <div className="flex items-start gap-3">
-                              <Calendar className="h-4 w-4 text-green-400 mt-1 flex-shrink-0" />
-                              <p className="text-sm text-gray-300">Today's events appear first, followed by upcoming ones</p>
+                          <div className="space-y-4">
+                            <div className="flex items-start gap-4 p-3 bg-gray-800/30 rounded-lg border border-gray-700/30">
+                              <div className="bg-green-500/20 p-2 rounded-lg flex-shrink-0">
+                                <Calendar className="h-4 w-4 text-green-400" />
+                              </div>
+                              <p className="text-sm text-gray-300 leading-relaxed">Today's events appear first, followed by upcoming ones sorted by date</p>
                             </div>
-                            <div className="flex items-start gap-3">
-                              <Shield className="h-4 w-4 text-red-400 mt-1 flex-shrink-0" />
-                              <p className="text-sm text-gray-300">At Your Risk: Enjoy free food responsibly and verify details</p>
+                            <div className="flex items-start gap-4 p-3 bg-gray-800/30 rounded-lg border border-gray-700/30">
+                              <div className="bg-red-500/20 p-2 rounded-lg flex-shrink-0">
+                                <Shield className="h-4 w-4 text-red-400" />
+                              </div>
+                              <p className="text-sm text-gray-300 leading-relaxed">At Your Risk: Enjoy free food responsibly and verify event details</p>
                             </div>
                           </div>
                         </div>
