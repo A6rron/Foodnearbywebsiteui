@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { useState } from "react";
-import { HelpCircle, MessageCircle, Bot, Database, Globe, FileImage, MessageSquare, Calendar, MapPin, AlertTriangle } from "lucide-react";
+import { HelpCircle, MessageCircle, Bot, Database, Globe, FileImage, MessageSquare, Calendar, MapPin, AlertTriangle, X } from "lucide-react";
 
 export function Navbar() {
   const phoneNumber = '917304483935' // country code +91 and number without + or spaces
@@ -34,19 +34,28 @@ export function Navbar() {
               </Button>
               {showTooltip && (
                 <div
-                  className="absolute top-full mt-10 left-1/2 transform -translate-x-1/2 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl xl:w-96 max-h-[28rem] sm:max-h-[32rem] overflow-y-auto bg-gray-900 border border-gray-700 text-white p-3 sm:p-4 md:p-5 rounded-lg shadow-xl z-50 animate-in fade-in-0 zoom-in-95 duration-200"
-                  onMouseEnter={() => setShowTooltip(true)}
-                  onMouseLeave={() => setShowTooltip(false)}
+                  className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 flex items-center justify-center p-4"
+                  onClick={() => setShowTooltip(false)}
                 >
-                  {/* Arrow pointing up */}
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-gray-700"></div>
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-gray-900"></div>
+                  <div
+                    className="relative w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl bg-gray-900 border border-gray-700 text-white p-4 sm:p-5 md:p-6 rounded-xl shadow-2xl animate-in fade-in-50 zoom-in-95 duration-300 max-h-[80vh] overflow-y-auto"
+                    onClick={(e) => e.stopPropagation()}
+                  >
 
-                  <div className="space-y-4">
-                    <h3 className="font-semibold text-base sm:text-lg text-center flex items-center justify-center gap-2">
-                      <HelpCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-                      How It Works
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-lg sm:text-xl flex items-center gap-3">
+                    <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400" />
+                    How It Works
                     </h3>
+                      <button
+                        onClick={() => setShowTooltip(false)}
+                        className="text-gray-400 hover:text-white transition-colors p-1 hover:bg-gray-800 rounded-lg"
+                      >
+                        <X className="h-5 w-5" />
+                      </button>
+                    </div>
+
+                    <div className="space-y-4">
 
                     {/* Flow Diagram */}
                     <div className="bg-gray-800 rounded-lg p-2 sm:p-3">
@@ -140,6 +149,7 @@ export function Navbar() {
                         <li>• <strong>Location permission</strong> is requested to show events near you (Aluva, Kerala by default)</li>
                         <li>• <strong>At Your Risk</strong>: Enjoy free food responsibly and verify event details when possible</li>
                       </ul>
+                    </div>
                     </div>
                   </div>
                 </div>
