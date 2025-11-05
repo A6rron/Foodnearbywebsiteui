@@ -202,8 +202,8 @@ export function EventListings({ userLocation }: EventListingsProps) {
     date.setHours(0, 0, 0, 0)
   }
 
-  // For demo purposes, show all events regardless of time
-  return date;
+  // If the resulting date is in the past, return null
+    return date.getTime() >= now.getTime() ? date : null;
   }
 
   // Parse time like '11:00 AM' or '11.00' into hours/minutes
