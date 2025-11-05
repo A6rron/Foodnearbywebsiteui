@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { HelpCircle } from "lucide-react";
 
 export function Navbar() {
@@ -7,25 +7,6 @@ export function Navbar() {
   const message = `1. *Event Name*:\n2. *Date and Time*:\n3. *Location*:\n4. *Map Link*:\n`
   const waLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
   const [showTooltip, setShowTooltip] = useState(false)
-  const tooltipRef = useRef<HTMLDivElement>(null)
-
-  const toggleTooltip = () => setShowTooltip(!showTooltip)
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (tooltipRef.current && !tooltipRef.current.contains(event.target as Node)) {
-        setShowTooltip(false)
-      }
-    }
-
-    if (showTooltip) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [showTooltip])
 
   return (
     <nav className="border-b border-gray-800 bg-gray-900 sticky top-0 z-50">
@@ -46,15 +27,16 @@ export function Navbar() {
             <div className="relative">
               <Button
                 className="bg-gray-700 text-white hover:bg-gray-600 rounded-full p-2"
-                onClick={toggleTooltip}
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
               >
                 <HelpCircle className="h-5 w-5" />
               </Button>
               {showTooltip && (
                 <div
-                  ref={tooltipRef}
-                  onClick={() => setShowTooltip(false)}
-                  className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 w-80 max-h-96 overflow-y-auto bg-gray-800 border border-gray-700 text-white p-4 rounded-md shadow-lg z-50 cursor-pointer"
+                  className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 w-80 max-h-96 overflow-y-auto bg-gray-900 border border-gray-700 text-white p-4 rounded-lg shadow-xl z-50"
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
                 >
                   <div className="space-y-3">
                     <h3 className="font-semibold text-lg">How It Works</h3>
