@@ -34,10 +34,13 @@ export function Navbar() {
               </Button>
               {showTooltip && (
                 <div
-                  className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 w-80 max-h-96 overflow-y-auto bg-gray-900 border border-gray-700 text-white p-4 rounded-lg shadow-xl z-50"
+                  className="absolute top-full mt-3 left-1/2 transform -translate-x-1/2 w-80 max-h-96 overflow-y-auto bg-gray-900 border border-gray-700 text-white p-4 rounded-lg shadow-2xl z-50 animate-in fade-in-0 zoom-in-95 duration-200"
                   onMouseEnter={() => setShowTooltip(true)}
                   onMouseLeave={() => setShowTooltip(false)}
                 >
+                  {/* Arrow pointing up */}
+                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-700"></div>
+                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-900"></div>
                   <div className="space-y-3">
                     <h3 className="font-semibold text-lg">How It Works</h3>
 
