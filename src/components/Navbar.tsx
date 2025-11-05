@@ -80,12 +80,15 @@ export function Navbar() {
                           <span>Website</span>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-400 mt-2 text-center">
-                        Add events via WhatsApp → Bot processes → Updates website instantly
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1 text-center">
-                        Powered by AI for accurate event extraction and real-time synchronization
-                      </p>
+                      <div className="mt-3 space-y-2">
+                      <p className="text-sm text-gray-300">
+                          <strong>Flow:</strong> User → WhatsApp → Bot → Supabase → Website (Real-time)
+                        </p>
+                      <p className="text-sm text-gray-300">
+                          Add events like marriages, catering, or free food through WhatsApp.
+                          The bot reads messages or posters, extracts details, and updates the website instantly.
+                        </p>
+                      </div>
                     </div>
 
                     {/* Event Types */}
