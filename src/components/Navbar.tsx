@@ -33,37 +33,37 @@ export function Navbar() {
                 <HelpCircle className="h-5 w-5" />
               </Button>
               {showTooltip && (
-              <div
-              className="absolute top-full mt-10 left-1/2 transform -translate-x-1/2 w-96 max-h-[32rem] overflow-y-auto bg-gray-900 border border-gray-700 text-white p-5 rounded-lg shadow-xl z-50 animate-in fade-in-0 zoom-in-95 duration-200"
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-              >
-              {/* Arrow pointing up */}
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-gray-700"></div>
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-gray-900"></div>
+                <div
+                  className="absolute top-full mt-10 left-1/2 transform -translate-x-1/2 w-96 max-h-[32rem] overflow-y-auto bg-gray-900 border border-gray-700 text-white p-5 rounded-lg shadow-xl z-50 animate-in fade-in-0 zoom-in-95 duration-200"
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                >
+                  {/* Arrow pointing up */}
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-gray-700"></div>
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-b-6 border-transparent border-b-gray-900"></div>
 
-              <div className="space-y-4">
+                  <div className="space-y-4">
                     <h3 className="font-semibold text-lg text-center flex items-center justify-center gap-2">
-                <HelpCircle className="h-5 w-5" />
-              How It Works
-              </h3>
+                      <HelpCircle className="h-5 w-5" />
+                      How It Works
+                    </h3>
 
                     {/* Flow Diagram */}
-                  <div className="bg-gray-800 rounded-lg p-3">
-                <p className="text-sm font-semibold text-center mb-2">Real-time Flow:</p>
-              <div className="flex items-center justify-center gap-2 text-xs">
-              <div className="flex flex-col items-center">
-                <div className="bg-green-600 rounded-full p-2 mb-1">
-                  <MessageCircle className="h-4 w-4" />
-                </div>
-                      <span>User</span>
-                       </div>
+                    <div className="bg-gray-800 rounded-lg p-3">
+                      <p className="text-sm font-semibold text-center mb-2">Real-time Flow:</p>
+                      <div className="flex items-center justify-center gap-2 text-xs">
+                        <div className="flex flex-col items-center">
+                          <div className="bg-green-600 rounded-full p-2 mb-1">
+                            <MessageCircle className="h-4 w-4" />
+                          </div>
+                          <span>User</span>
+                        </div>
                         <div className="text-gray-400">→</div>
                         <div className="flex flex-col items-center">
-                      <div className="bg-blue-600 rounded-full p-2 mb-1">
-                          <Bot className="h-4 w-4" />
-                        </div>
-                      <span>WhatsApp Bot</span>
+                          <div className="bg-blue-600 rounded-full p-2 mb-1">
+                            <Bot className="h-4 w-4" />
+                          </div>
+                          <span>WhatsApp Bot</span>
                         </div>
                         <div className="text-gray-400">→</div>
                         <div className="flex flex-col items-center">
